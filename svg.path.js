@@ -2,11 +2,15 @@
  * http://otm.github.io/svg.path.js/
  * Copyright (c) 2014 Nils Lagerkvist; Licensed under the  MIT license /
  */
+
+import { extend, Path } from '@svgdotjs/svg.js';
+
 (function() {
 
 	var slice = Function.prototype.call.bind(Array.prototype.slice);
+	var clear = Path.prototype.clear;
 
-	SVG.extend(SVG.Path, {
+	extend(Path, {
 		M: function(p){
 			p = (arguments.length === 1) ? [p.x, p.y] : slice(arguments);
 
@@ -125,12 +129,12 @@
 
 			return this;
 		},
-		clearPath: function(){
+		clear: function(){
 			if (this._segments){
 				this._segments.length = 0;
 			}
 			this._lastSegment = null;
-			return this.plot();
+			return clear.apply(this, arguments);
 		},
 		getSegmentCount: function(){
 			return this._segments.length;
